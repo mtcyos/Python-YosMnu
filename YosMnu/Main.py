@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*
+# -*- coding: utf-8 -*-
 """
-   YosCtr.py
+   YosMnu.py
    Control central entorno Yos
 
    Copyright (c) 2026 Miguel Tortosa
@@ -42,6 +42,8 @@ match platform.system():
         sys.exit(0)
 
 # Configuracion del Script
+import builtins
+builtins.Mem_Ini_AplNom="YosMnu"
 import Ini
 import Yos
 
@@ -61,7 +63,8 @@ if script_path not in sys.path:
                 spec.loader.exec_module(module)
                 sys.modules[module_name] = module
                 globals()[module_name] = module
-                #print(f"Bin > Módulo '{module_name}' cargado con éxito.")
+#                print(f"Bin > Módulo '{module_name}' cargado con éxito.")
+#                input()
 else:
     print(f"Yos > Error: No se encuentra la carpeta {script_path}")
 # FIN - Los Scrpt de trabajo
@@ -72,7 +75,12 @@ def main():
     # INICIO - Proceso del menu
     while True:
         # Capturamos la entrada del usuario
-        MnuFnc = Yos.Mnu()
+        #YosCfg["Apl_Etn"] =  # "Txt"=Modo Terminal - Colorama, "Gui"=Modo Terminal - Textual, "Www"=Web
+        match YosCfg["Apl_Etn"]:
+            case "Gui": # Modo Terminal - Textual
+                MnuFnc = Yos.Mnu()  # Con textual
+            case _:
+                MnuFnc = Yos.MnuTxt()  # Con Colorama
 
         if MnuFnc == "YosMnuCag":
             Yos.MnuRec("Main")
